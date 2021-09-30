@@ -13,7 +13,7 @@ class Utilities {
         let jsonDecoder = JSONDecoder()
         ///converts snake case - > camel case
         jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-        jsonDecoder.dateDecodingStrategy = .custom(<#T##(Decoder) -> Foundation.Date#>)
+        jsonDecoder.dateDecodingStrategy = .formatted(dateFormatter)
         return jsonDecoder
     }()
     

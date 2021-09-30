@@ -8,7 +8,7 @@
 import Foundation
 
 class MovieStore: MovieService {
-    
+   
     
     static let shared = MovieStore()
     private init() {}
@@ -17,6 +17,22 @@ class MovieStore: MovieService {
     private let baseAPIURL = "https://api.themoviedb.org/3" //tmdb authent.
     ///Making a URL Request
     private let URLSessioni = URLSession.shared
+    private let jsonDecoder = Utilities.jsonDecoder
+    
+    
+    func fetchMovies(from endpoint: MovieListEndpoints,
+                     completion: @escaping (Result<MovieResponse, MovieError>) -> ()) {
+        
+    }
+    func fetchMovie(id: Int,
+                    Completion: @escaping (Result<Movie, MovieError>) -> ()) {
+        
+    }
+    func searchMovie(query: String,
+                     completion: @escaping (Result<MovieResponse, MovieError>) -> ()) {
+    }
+    
+    
     
     
 }
