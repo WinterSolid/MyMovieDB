@@ -6,6 +6,7 @@
 //singleton pattern - one object needed across system
 
 import Foundation
+import SwiftUI
 
 class MovieStore: MovieService {
    
@@ -32,7 +33,35 @@ class MovieStore: MovieService {
                      completion: @escaping (Result<MovieResponse, MovieError>) -> ()) {
     }
     
-    
-    
-    
+    private func loadURLDecode<D: Decodable>(url: URL,
+                                             params: [String: String]? = nil,
+                                             completion: @escaping (Result<D, MovieError>) -> ()) {
+        
+        guard var urlComponents = URLComponents(url: url,
+                                                resolvingAgainstBaseURL: false) else {
+            completion(.failure(.invalidEndpoint))///MovieService file  line 46
+            return
+        }
+        
+        var queryItems = [URLQueryItem(name: "api_key", value: apiKey)]
+        if let params = params {
+            queryItems.append(contentsOf: params.map { URLQueryItem(name: $0.key,
+                                                                    value: $0.value)})
+        }
+        
+        urlComponents.queryItems = queryItems
+        
+        guard let finalURL = urlComponents.url else {
+            completion(.failure(.invalidEndpoint))
+            return
+        }
+        ///api error
+        urlSession.dataTask(with: finalURL) { (data, response, error) in
+            if error != nil {
+                completion(.failure(.apiError))
+                return
+            }
+            
+        }
+    }
 }
